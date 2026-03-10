@@ -1,71 +1,64 @@
 [build-system]
-requires = ["maturin>=1.4,<2.0"]
-build-backend = "maturin"
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "rag-plusplus"
-version = "0.1.0"
-description = "RAG++: High-performance retrieval for memory-conditioned selection (Rust core with Python bindings)"
+version = "2.0.0"
+description = "RAG++ Context Gateway: federated retrieval across pgvector, Graph Kernel, and Gemini embeddings"
 readme = "README.md"
 license = { text = "MIT" }
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 authors = [
     { name = "Mohamed Diomande" },
 ]
 keywords = [
     "retrieval",
     "rag",
-    "vector-search",
-    "hnsw",
-    "trajectory",
-    "rust",
-    "pyo3",
+    "context-gateway",
+    "pgvector",
+    "echo-suppression",
+    "graph-kernel",
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
-    "Intended Audience :: Science/Research",
     "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
-    "Programming Language :: Rust",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 dependencies = [
-    "numpy>=1.21.0",
+    "numpy>=2.0.0",
+    "pydantic>=2.0.0",
+    "fastapi>=0.100.0",
+    "uvicorn[standard]>=0.23.0",
+    "httpx>=0.25.0",
+    "google-genai>=1.0.0",
+    "structlog>=23.0.0",
+    "prometheus_client>=0.17.0",
 ]
 
 [project.optional-dependencies]
 dev = [
     "pytest>=7.0.0",
-    "pytest-benchmark>=4.0.0",
-    "mypy>=1.5.0",
     "ruff>=0.1.0",
+]
+supabase = [
+    "supabase>=2.0.0",
 ]
 
 [project.urls]
-Homepage = "https://github.com/mohameddiomande/rag-plusplus"
-Repository = "https://github.com/mohameddiomande/rag-plusplus"
-Documentation = "https://github.com/mohameddiomande/rag-plusplus#readme"
+Homepage = "https://github.com/Diomandeee/rag-plusplus"
+Repository = "https://github.com/Diomandeee/rag-plusplus"
 
-[tool.maturin]
-# Build for Python 3.9+ ABI
-python-source = "python"
-module-name = "rag_plusplus._rag_plusplus_rs"
-features = ["pyo3/extension-module"]
-strip = true
+[project.scripts]
+rag-plusplus = "rag_plusplus.service.app:main"
 
-# Bindings type
-bindings = "pyo3"
-
-# Include these files in the wheel
-include = [
-    "README.md",
-]
+[tool.setuptools.packages.find]
+include = ["rag_plusplus*"]
 
 [tool.pytest.ini_options]
 minversion = "7.0"
@@ -73,10 +66,6 @@ addopts = ["-ra", "-q"]
 testpaths = ["tests"]
 
 [tool.ruff]
-target-version = "py39"
+target-version = "py310"
 line-length = 100
 select = ["E", "W", "F", "I", "B", "UP"]
-
-[tool.mypy]
-python_version = "3.9"
-strict = true
