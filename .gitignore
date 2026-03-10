@@ -1,13 +1,7 @@
+target/
+Cargo.lock
 __pycache__/
 *.pyc
-*.pyo
+*.so
 dist/
-build/
 *.egg-info/
-.eggs/
-.venv/
-venv/
-.env
-.pytest_cache/
-.ruff_cache/
-.mypy_cache/
